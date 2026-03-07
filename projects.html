@@ -1,0 +1,829 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dylan Allen — Systems Portfolio</title>
+<style>
+:root{
+  --bg:#0b1220;
+  --panel:#111a2e;
+  --panel2:#0f1728;
+  --card:#16213a;
+  --card2:#1b2847;
+  --ink:#ecf2ff;
+  --mut:#a8b4d1;
+  --line:rgba(255,255,255,.10);
+  --accent:#67a4ff;
+  --accent2:#72e4c7;
+  --shadow:0 18px 40px rgba(0,0,0,.28);
+  --r:18px;
+  --sans:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:var(--sans);
+  color:var(--ink);
+  background:
+    radial-gradient(900px 500px at 10% 0%,rgba(103,164,255,.14),transparent 60%),
+    radial-gradient(700px 500px at 100% 10%,rgba(114,228,199,.10),transparent 55%),
+    linear-gradient(180deg,#09111d,#0b1220 45%,#0a1020);
+}
+.app{
+  display:grid;
+  grid-template-columns:320px 1fr;
+  min-height:100vh;
+}
+@media (max-width:980px){
+  .app{grid-template-columns:1fr}
+  .sidebar{position:relative;height:auto}
+}
+.sidebar{
+  position:sticky;
+  top:0;
+  height:100vh;
+  border-right:1px solid var(--line);
+  background:linear-gradient(180deg,rgba(17,26,46,.98),rgba(12,19,34,.98));
+  padding:22px 18px 18px;
+  overflow:auto;
+}
+.brand{
+  padding:14px 14px 16px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
+  box-shadow:var(--shadow);
+}
+.brand h1{
+  margin:0;
+  font-size:22px;
+  line-height:1.05;
+  letter-spacing:-.03em;
+}
+.brand p{
+  margin:8px 0 0;
+  color:var(--mut);
+  font-size:13.5px;
+  line-height:1.45;
+}
+.meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:12px;
+}
+.tag{
+  font-size:11.5px;
+  padding:6px 9px;
+  border-radius:999px;
+  color:#dbe7ff;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
+}
+.search{
+  margin:14px 0 10px;
+}
+.search input{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:rgba(255,255,255,.05);
+  color:var(--ink);
+  padding:11px 12px;
+  font:inherit;
+  outline:none;
+}
+.search input::placeholder{color:#90a1c8}
+.group{
+  margin-top:16px;
+}
+.group-label{
+  font-size:11px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:#91a2ca;
+  margin:0 0 8px 10px;
+}
+.nav{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.nav button{
+  width:100%;
+  text-align:left;
+  background:transparent;
+  color:var(--ink);
+  border:1px solid transparent;
+  border-radius:16px;
+  padding:12px 12px 11px;
+  cursor:pointer;
+  transition:.18s ease;
+}
+.nav button:hover{
+  background:rgba(255,255,255,.05);
+  border-color:rgba(255,255,255,.08);
+}
+.nav button.active{
+  background:linear-gradient(180deg,rgba(103,164,255,.17),rgba(114,228,199,.08));
+  border-color:rgba(103,164,255,.22);
+}
+.item-title{
+  font-size:14px;
+  font-weight:650;
+  line-height:1.25;
+}
+.item-sub{
+  margin-top:4px;
+  font-size:12.2px;
+  color:var(--mut);
+  line-height:1.35;
+}
+.main{
+  padding:26px;
+}
+@media (max-width:700px){
+  .main{padding:16px}
+}
+.hero{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:16px;
+}
+@media (max-width:980px){
+  .hero{grid-template-columns:1fr}
+}
+.card{
+  border:1px solid var(--line);
+  border-radius:22px;
+  background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.02));
+  box-shadow:var(--shadow);
+}
+.card.pad{padding:20px}
+.title{
+  font-size:34px;
+  line-height:1.02;
+  letter-spacing:-.035em;
+  margin:0;
+}
+.subtitle{
+  margin:10px 0 0;
+  font-size:15px;
+  line-height:1.55;
+  color:var(--mut);
+  max-width:900px;
+}
+.header-meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:14px;
+}
+.badge{
+  font-family:var(--mono);
+  font-size:11.5px;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.09);
+  background:rgba(255,255,255,.05);
+  color:#dce7ff;
+}
+.badge.status-live{border-color:rgba(114,228,199,.28);background:rgba(114,228,199,.10)}
+.badge.status-proto{border-color:rgba(255,206,121,.28);background:rgba(255,206,121,.10)}
+.stat-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.stat{
+  padding:14px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:rgba(255,255,255,.03);
+}
+.stat .k{
+  font-size:11px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:#93a4cb;
+}
+.stat .v{
+  margin-top:6px;
+  font-size:15px;
+  font-weight:650;
+  line-height:1.25;
+}
+.layout{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:16px;
+  margin-top:16px;
+}
+.section{
+  padding:18px 20px;
+}
+.section-head{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:10px;
+}
+.section-head h2{
+  margin:0;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  color:#91a2ca;
+  white-space:nowrap;
+}
+.rule{
+  height:1px;
+  flex:1;
+  background:linear-gradient(90deg,rgba(255,255,255,.14),transparent);
+}
+.copy{
+  font-size:14px;
+  line-height:1.62;
+  color:#eaf0ff;
+}
+.copy p{margin:0 0 10px}
+.copy p:last-child{margin-bottom:0}
+.grid-2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+@media (max-width:900px){
+  .grid-2{grid-template-columns:1fr}
+}
+.mini-card{
+  padding:16px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:rgba(255,255,255,.03);
+}
+.mini-card h3{
+  margin:0 0 8px;
+  font-size:13px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:#a8b8dc;
+}
+.mini-card p{
+  margin:0;
+  font-size:14px;
+  line-height:1.55;
+  color:#e7efff;
+}
+.list{
+  margin:0;
+  padding-left:18px;
+}
+.list li{
+  margin:7px 0;
+  font-size:14px;
+  line-height:1.5;
+  color:#e8efff;
+}
+.outcomes{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.outcomes .pill{
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.03);
+  font-size:13px;
+  color:#e6eeff;
+}
+.note{
+  font-size:12.8px;
+  line-height:1.5;
+  color:#9dafd4;
+}
+.empty{
+  padding:16px;
+  border:1px dashed rgba(255,255,255,.14);
+  border-radius:16px;
+  color:#9eb0d6;
+  font-size:13px;
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <h1>Dylan Allen<br>Systems Portfolio</h1>
+      <p>Text-based portfolio documenting major apps, workflow improvements, upgrades, and automation-minded projects.</p>
+      <div class="meta">
+        <span class="tag">Nonprofit Ops</span>
+        <span class="tag">Finance / Data</span>
+        <span class="tag">Web / Systems</span>
+      </div>
+    </div>
+
+    <div class="search">
+      <input id="search" type="text" placeholder="Search projects">
+    </div>
+
+    <div class="group">
+      <div class="group-label">Implemented</div>
+      <div class="nav" id="nav-implemented"></div>
+    </div>
+
+    <div class="group">
+      <div class="group-label">Concepts / Prototypes</div>
+      <div class="nav" id="nav-prototypes"></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <section class="hero">
+      <div class="card pad">
+        <h1 class="title" id="title">Select a project</h1>
+        <p class="subtitle" id="subtitle">Choose an item from the left to view documentation, reasoning, and efficiency impact.</p>
+        <div class="header-meta" id="header-meta"></div>
+      </div>
+
+      <div class="card pad">
+        <div class="stat-grid">
+          <div class="stat">
+            <div class="k">Type</div>
+            <div class="v" id="stat-type">—</div>
+          </div>
+          <div class="stat">
+            <div class="k">Status</div>
+            <div class="v" id="stat-status">—</div>
+          </div>
+          <div class="stat">
+            <div class="k">Primary value</div>
+            <div class="v" id="stat-value">—</div>
+          </div>
+          <div class="stat">
+            <div class="k">Audience</div>
+            <div class="v" id="stat-audience">—</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="layout">
+      <section class="card section">
+        <div class="section-head"><h2>Overview</h2><div class="rule"></div></div>
+        <div class="copy" id="overview"></div>
+      </section>
+
+      <section class="card section">
+        <div class="section-head"><h2>Problem / Why it existed</h2><div class="rule"></div></div>
+        <div class="grid-2">
+          <div class="mini-card">
+            <h3>Problem</h3>
+            <p id="problem"></p>
+          </div>
+          <div class="mini-card">
+            <h3>Reason</h3>
+            <p id="reason"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card section">
+        <div class="section-head"><h2>What I built / changed</h2><div class="rule"></div></div>
+        <ul class="list" id="built"></ul>
+      </section>
+
+      <section class="card section">
+        <div class="section-head"><h2>Efficiency impact</h2><div class="rule"></div></div>
+        <div class="outcomes" id="efficiency"></div>
+      </section>
+
+      <section class="card section">
+        <div class="section-head"><h2>Tools / systems used</h2><div class="rule"></div></div>
+        <div class="outcomes" id="tools"></div>
+      </section>
+
+      <section class="card section">
+        <div class="section-head"><h2>Notes</h2><div class="rule"></div></div>
+        <div class="note" id="notes"></div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<script>
+const projects = [
+  {
+    id:"master-data",
+    group:"implemented",
+    title:"Class & Program Submission System",
+    short:"Master data engine replacing Word-based class submission forms.",
+    type:"Workflow / Data System",
+    status:"Implemented",
+    value:"Accuracy + consistency",
+    audience:"Programs / Admin / Marketing",
+    tags:["Power Apps","SharePoint","Master Data","Pricing Logic"],
+    overview:[
+      "Built a structured submission workflow to replace an old process that relied on individual Microsoft Word documents for each class submission.",
+      "The new system creates a single reliable dataset for class information, pricing, and downstream reuse across departments.",
+      "It shifted class setup from a repetitive clerical process into a standardized operational system."
+    ],
+    problem:"The prior method used separate Word files with empty fields, redundant data entry, inconsistent formatting, and weak accountability. It was slow, ugly, and error-prone.",
+    reason:"Class information fed multiple downstream uses, but the source input was unstable. Clean outputs were impossible without cleaning up the way information entered the system.",
+    built:[
+      "Structured intake flow for class details and revisions",
+      "Concrete pricing model for consistent pricing across offerings",
+      "Better record consistency and traceability",
+      "Reusable master dataset supporting web, marketing, and reporting"
+    ],
+    efficiency:[
+      "Reduces duplicate entry",
+      "Cuts rework and corrections",
+      "Improves accountability",
+      "Makes downstream publishing faster"
+    ],
+    tools:["Power Apps","SharePoint","Excel logic","Process design"],
+    notes:"One of the highest-leverage improvements. Also serves as the foundation for later automation work."
+  },
+  {
+    id:"social-posts",
+    group:"implemented",
+    title:"Instant Social Post Generator",
+    short:"Template-driven social graphics using live master class data.",
+    type:"Automation / Marketing Support",
+    status:"Implemented",
+    value:"Speed + brand consistency",
+    audience:"Marketing / Programs",
+    tags:["Power Apps","Templates","Design Systems","Social Media"],
+    overview:[
+      "Used the master class dataset to generate social media posts from prebuilt branded templates.",
+      "Combined clean operational data with designer-created visual templates so posts could be created quickly without rebuilding them manually.",
+      "Shows how structured data can directly power creative output."
+    ],
+    problem:"Social posts previously required manual retyping of class information and repeated layout work.",
+    reason:"Marketing execution was consuming time unnecessarily because the data already existed elsewhere but was not reusable in a structured way.",
+    built:[
+      "Template-driven post creation workflow",
+      "Data population from existing class records",
+      "Reduced manual design repetition",
+      "Improved consistency in class promotion output"
+    ],
+    efficiency:[
+      "Faster post creation",
+      "Less repetitive design work",
+      "More consistent brand output",
+      "Better reuse of existing data"
+    ],
+    tools:["Power Apps","Master data source","Graphic templates"],
+    notes:"Good example of how design and systems work can reinforce each other."
+  },
+  {
+    id:"grant-reimbursement",
+    group:"implemented",
+    title:"Grant Reimbursement Documentation Workflow",
+    short:"Paperless browser-based system for reimbursement backup and file management.",
+    type:"Finance / Documentation Workflow",
+    status:"Implemented",
+    value:"Time savings + audit readiness",
+    audience:"Finance / Admin / Grants",
+    tags:["Browser App","Documentation","Grant Workflow","File Logic"],
+    overview:[
+      "Rebuilt an archaic grant reimbursement documentation process into a cleaner browser-based workflow.",
+      "Instead of pasting supporting documents into Word and manually matching them against spreadsheets, the workflow now sorts and organizes supporting files in a much more usable way.",
+      "This is a flagship example of workflow/dataflow thinking applied to a process people had simply accepted as painful."
+    ],
+    problem:"The old process relied on printing, toner, pasted documents, one-page-at-a-time review, and manual matching between backup and spreadsheet entries.",
+    reason:"The original workflow wasted time every cycle and created confusion, inconsistency, and a higher chance of missing or mismatched support.",
+    built:[
+      "Browser-based document sorting workflow",
+      "Simple copy/paste-oriented backup management",
+      "Cleaner file organization for current and future cycles",
+      "More consistent relationship between records and supporting documentation"
+    ],
+    efficiency:[
+      "Eliminates large amounts of manual handling",
+      "Reduces confusion and mismatch risk",
+      "Cuts print / paper / toner use",
+      "Improves repeatability for future submissions"
+    ],
+    tools:["Single-file web app","File organization logic","Spreadsheet alignment"],
+    notes:"One of the strongest portfolio examples because it combines operations, finance-adjacent documentation, usability, and systems thinking."
+  },
+  {
+    id:"all-classes",
+    group:"implemented",
+    title:"All Classes Catalog + Session Control Logic",
+    short:"Student-facing full catalog plus bulk session cleanup logic.",
+    type:"Web Infrastructure / Maintenance Reduction",
+    status:"Implemented",
+    value:"Maintenance reduction + usability",
+    audience:"Students / Staff / Web",
+    tags:["WordPress","Beaver Builder","ACF","Catalog View"],
+    overview:[
+      "Built a sortable all-classes view so users could browse the full class catalog in one place.",
+      "Also implemented a cleaner way to disable prior sessions in bulk rather than manually removing registration links one file at a time.",
+      "This turned a recurring maintenance chore into a better-controlled web system."
+    ],
+    problem:"The platform did not naturally support a good full-catalog experience, and old session cleanup was tedious and repetitive.",
+    reason:"The existing workflow created maintenance drag and poor user visibility. Both were solvable by treating the issue as a system problem instead of a page-by-page editing problem.",
+    built:[
+      "Sortable full-catalog display",
+      "Better handling of prior-session content",
+      "Reduced need for repetitive manual link removal",
+      "More scalable ongoing class publishing flow"
+    ],
+    efficiency:[
+      "Improves browseability for students",
+      "Reduces low-value maintenance work",
+      "Lowers risk of outdated links remaining live",
+      "Supports seasonal turnover more cleanly"
+    ],
+    tools:["WordPress","Beaver Builder","ACF","Front-end logic"],
+    notes:"Useful example of solving a CMS/platform limitation without relying on ideal tooling."
+  },
+  {
+    id:"gallery-slides",
+    group:"implemented",
+    title:"Gallery Slideshow + Print-to-PDF Workflow",
+    short:"Reused existing web content to generate slideshow and print output faster.",
+    type:"Reuse / Publishing Workflow",
+    status:"Implemented",
+    value:"Reuse existing work",
+    audience:"Programs / Gallery / Admin",
+    tags:["Web reuse","Slideshows","Print to PDF","Content grid"],
+    overview:[
+      "Created a workflow that reused existing web-based class or content listings to quickly generate gallery slideshows and print-ready output.",
+      "Instead of rebuilding the same information in another format, the workflow leveraged content already maintained on the site.",
+      "The system reduces duplicate effort by treating the website as a reusable content source."
+    ],
+    problem:"Slideshows and print materials were being assembled through redundant work even though the same content already existed elsewhere.",
+    reason:"Repeated manual rebuilding adds no value when the real issue is lack of reuse.",
+    built:[
+      "Unlisted page/content-grid reuse workflow",
+      "Custom print-to-PDF usage for output generation",
+      "Faster conversion of existing content into presentation material"
+    ],
+    efficiency:[
+      "Less duplicate production work",
+      "Faster slideshow creation",
+      "Better reuse of maintained content",
+      "Cleaner content pipeline"
+    ],
+    tools:["WordPress","Content grid","Print-to-PDF workflow"],
+    notes:"Simple but strong example of 'build once, reuse everywhere.'"
+  },
+  {
+    id:"payroll-excel",
+    group:"implemented",
+    title:"Payroll Submission + Calculation Modernization",
+    short:"Modernized payroll calculations across multiple pay types with advanced Excel logic.",
+    type:"Finance / Calculation Workflow",
+    status:"Implemented",
+    value:"Accuracy + standardization",
+    audience:"Finance / Payroll / Admin",
+    tags:["Excel","Formulas","Payroll","Calculation Logic"],
+    overview:[
+      "Built a more structured payroll submission and calculation framework using Excel formulas across complicated pay types.",
+      "The goal was not just speed, but consistency and confidence in outputs.",
+      "This improvement stabilized a sensitive area without adding unnecessary system complexity."
+    ],
+    problem:"Payroll calculations across varying pay structures were difficult to verify and more vulnerable to inconsistency and manual mistakes.",
+    reason:"Payroll is one of the last places where fragility should be tolerated. A better formula framework directly reduces operational risk.",
+    built:[
+      "Structured formula logic for multiple pay types",
+      "More standardized payroll calculation flow",
+      "Cleaner reviewable outputs",
+      "Reduced dependence on ad hoc manual math"
+    ],
+    efficiency:[
+      "Improves confidence in outputs",
+      "Reduces manual calculation time",
+      "Supports consistency across pay types",
+      "Creates clearer review structure"
+    ],
+    tools:["Excel","Formula design","Payroll logic"],
+    notes:"Important because it touches money, trust, and repeatability."
+  },
+  {
+    id:"donor-letters",
+    group:"prototypes",
+    title:"Donor Letter Batch System",
+    short:"Batch letter generation/editing workflow from CSV-style structured data.",
+    type:"Prototype / Communication Workflow",
+    status:"Prototype",
+    value:"Batch standardization",
+    audience:"Development / Admin",
+    tags:["Letters","CSV","Templates","Batch Editing"],
+    overview:[
+      "Designed a donor acknowledgement letter workflow that could generate, edit, and standardize letters in batches from structured input data.",
+      "Although likely superseded by upcoming CRM changes, it still demonstrates strong process logic and repeatable communication design."
+    ],
+    problem:"Letter workflows were repetitive, formatting-heavy, and poorly suited to scale.",
+    reason:"Acknowledgements are sensitive and repetitive at the same time. That combination is ideal for structure and automation.",
+    built:[
+      "Batch-oriented letter generation concept",
+      "Centralized defaults and boilerplate handling",
+      "Editable output flow for review"
+    ],
+    efficiency:[
+      "Would reduce copy/paste work",
+      "Would improve consistency",
+      "Would speed batch processing"
+    ],
+    tools:["HTML/JS concept","Structured data","Template logic"],
+    notes:"Good concept example even if not deployed."
+  },
+  {
+    id:"revenue-browser",
+    group:"prototypes",
+    title:"Revenue Browser / Recognition Viewer",
+    short:"Fast browser for large exports to inspect revenue and donor-related data.",
+    type:"Prototype / Data Inspection Tool",
+    status:"Prototype",
+    value:"Faster lookup",
+    audience:"Development / Finance / Leadership",
+    tags:["Large exports","Search","Revenue","Data browsing"],
+    overview:[
+      "Prototyped a fast browser for large revenue exports so users could inspect constituent or recognition information without wrestling directly with unwieldy spreadsheets.",
+      "The concept was aimed at making revenue data easier to explore and interpret."
+    ],
+    problem:"Large exports are difficult to inspect quickly and often exceed the convenience threshold for normal spreadsheet use.",
+    reason:"If people avoid looking at the data because it is cumbersome, the data is effectively less useful.",
+    built:[
+      "Search/browse concept for large exported data",
+      "Performance-conscious client-side handling ideas",
+      "Cleaner lookup-oriented interface"
+    ],
+    efficiency:[
+      "Would speed donor/revenue lookup",
+      "Would reduce spreadsheet friction",
+      "Would improve access to operational information"
+    ],
+    tools:["Client-side JS","Large-data handling concepts"],
+    notes:"Useful as a demonstration of performance-aware thinking."
+  },
+  {
+    id:"deposit-parser",
+    group:"prototypes",
+    title:"Deposit Parsing + Normalized Summaries",
+    short:"Cleaner summaries for messy deposit outputs.",
+    type:"Prototype / Finance Utility",
+    status:"Prototype",
+    value:"Readability + cleanup",
+    audience:"Finance / Admin",
+    tags:["Deposits","Parsing","Normalization","Finance utility"],
+    overview:[
+      "Designed a utility to convert messy deposit outputs into readable summaries with clearer subtotals and more usable itemization.",
+      "The value is less about complexity and more about removing nuisance and interpretation overhead."
+    ],
+    problem:"Deposit reports can contain too much noise and not enough structure for fast review.",
+    reason:"When staff spend time interpreting the format instead of reviewing the content, the report is underperforming.",
+    built:[
+      "Summary normalization concept",
+      "Cleaner categorization of deposit types",
+      "Simplified reading of relevant details"
+    ],
+    efficiency:[
+      "Would reduce interpretation time",
+      "Would improve readability",
+      "Would make reconciliation review easier"
+    ],
+    tools:["Parsing logic","Formatting rules","Finance utility concept"],
+    notes:"Good smaller example of eliminating low-value friction."
+  },
+  {
+    id:"payroll-ui",
+    group:"prototypes",
+    title:"Payroll Approval Interface",
+    short:"Fast-review UI for approval flow; built but not adopted.",
+    type:"Prototype / Approval UX",
+    status:"Prototype",
+    value:"Review speed",
+    audience:"Managers / Payroll review",
+    tags:["Approval UI","Payroll","Review flow"],
+    overview:[
+      "Built a fast approval interface concept intended to speed payroll review and approval decisions.",
+      "Not adopted, but still relevant as a demonstration of usability-focused workflow design."
+    ],
+    problem:"Traditional approval review flows can be clunky and time-consuming.",
+    reason:"Approval work is repetitive and usually benefits from a tighter interface than generic forms or spreadsheets provide.",
+    built:[
+      "Quick-review approval concept",
+      "More focused interaction model for decisions",
+      "Cleaner UX for repetitive review tasks"
+    ],
+    efficiency:[
+      "Would speed approvals",
+      "Would reduce review friction",
+      "Would simplify repetitive interactions"
+    ],
+    tools:["UI concept","Workflow UX","Payroll review logic"],
+    notes:"Keep this lower priority in external presentation unless specifically relevant."
+  }
+];
+
+const els = {
+  navImplemented: document.getElementById("nav-implemented"),
+  navPrototypes: document.getElementById("nav-prototypes"),
+  search: document.getElementById("search"),
+  title: document.getElementById("title"),
+  subtitle: document.getElementById("subtitle"),
+  headerMeta: document.getElementById("header-meta"),
+  statType: document.getElementById("stat-type"),
+  statStatus: document.getElementById("stat-status"),
+  statValue: document.getElementById("stat-value"),
+  statAudience: document.getElementById("stat-audience"),
+  overview: document.getElementById("overview"),
+  problem: document.getElementById("problem"),
+  reason: document.getElementById("reason"),
+  built: document.getElementById("built"),
+  efficiency: document.getElementById("efficiency"),
+  tools: document.getElementById("tools"),
+  notes: document.getElementById("notes"),
+};
+
+let activeId = projects[0].id;
+let filterText = "";
+
+function navButtonHTML(p){
+  return `
+    <button type="button" data-id="${p.id}" class="${p.id===activeId ? 'active' : ''}">
+      <div class="item-title">${p.title}</div>
+      <div class="item-sub">${p.short}</div>
+    </button>
+  `;
+}
+
+function renderNav(){
+  const filtered = projects.filter(p=>{
+    const hay = (p.title+" "+p.short+" "+p.type+" "+p.tags.join(" ")).toLowerCase();
+    return hay.includes(filterText.toLowerCase());
+  });
+
+  const implemented = filtered.filter(p=>p.group==="implemented");
+  const prototypes = filtered.filter(p=>p.group==="prototypes");
+
+  els.navImplemented.innerHTML = implemented.length
+    ? implemented.map(navButtonHTML).join("")
+    : `<div class="empty">No implemented items match your search.</div>`;
+
+  els.navPrototypes.innerHTML = prototypes.length
+    ? prototypes.map(navButtonHTML).join("")
+    : `<div class="empty">No prototype items match your search.</div>`;
+
+  document.querySelectorAll(".nav button").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      activeId = btn.dataset.id;
+      renderNav();
+      renderDetail();
+    });
+  });
+
+  const stillVisible = filtered.some(p=>p.id===activeId);
+  if(!stillVisible && filtered.length){
+    activeId = filtered[0].id;
+    renderNav();
+    renderDetail();
+  }
+}
+
+function renderDetail(){
+  const p = projects.find(x=>x.id===activeId);
+  if(!p) return;
+
+  els.title.textContent = p.title;
+  els.subtitle.textContent = p.short;
+  els.headerMeta.innerHTML = `
+    <span class="badge ${p.status==="Implemented" ? "status-live" : "status-proto"}">${p.status}</span>
+    <span class="badge">${p.type}</span>
+    ${p.tags.map(t=>`<span class="badge">${t}</span>`).join("")}
+  `;
+  els.statType.textContent = p.type;
+  els.statStatus.textContent = p.status;
+  els.statValue.textContent = p.value;
+  els.statAudience.textContent = p.audience;
+
+  els.overview.innerHTML = p.overview.map(x=>`<p>${x}</p>`).join("");
+  els.problem.textContent = p.problem;
+  els.reason.textContent = p.reason;
+  els.built.innerHTML = p.built.map(x=>`<li>${x}</li>`).join("");
+  els.efficiency.innerHTML = p.efficiency.map(x=>`<div class="pill">${x}</div>`).join("");
+  els.tools.innerHTML = p.tools.map(x=>`<div class="pill">${x}</div>`).join("");
+  els.notes.textContent = p.notes;
+}
+
+els.search.addEventListener("input", e=>{
+  filterText = e.target.value.trim();
+  renderNav();
+});
+
+renderNav();
+renderDetail();
+</script>
+</body>
+</html>
