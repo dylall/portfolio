@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dylan Allen — Resume</title>
+<style>
+:root{
+  --bg:#0a0d14;
+  --panel:#111624;
+  --panel-2:#171d2d;
+  --card:#151b2a;
+  --card-2:#1b2336;
+  --ink:#eef3ff;
+  --mut:#a4afc8;
+  --line:rgba(255,255,255,.08);
+  --accent:#8fb4ff;
+  --accent-2:#7ee0c3;
+  --shadow:0 20px 45px rgba(0,0,0,.28);
+  --r:22px;
+  --sans:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:var(--sans);
+  color:var(--ink);
+  background:
+    radial-gradient(900px 520px at 5% 0%,rgba(143,180,255,.12),transparent 60%),
+    radial-gradient(700px 420px at 100% 10%,rgba(126,224,195,.08),transparent 55%),
+    linear-gradient(180deg,#070a11,#0a0d14 45%,#090c12);
+}
+a{color:inherit;text-decoration:none}
+.shell{
+  max-width:1080px;
+  margin:0 auto;
+  padding:22px 16px 80px;
+}
+.topbar{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:16px;
+  flex-wrap:wrap;
+}
+.brand{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.brand h1{
+  margin:0;
+  font-size:16px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:#dfe8ff;
+}
+.brand p{
+  margin:0;
+  font-size:12.5px;
+  color:var(--mut);
+}
+.controls{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.btn{
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.04);
+  color:var(--ink);
+  border-radius:999px;
+  padding:9px 12px;
+  font:inherit;
+  font-size:13px;
+  cursor:pointer;
+  transition:.18s ease;
+}
+.btn:hover{background:rgba(255,255,255,.08)}
+.btn.active{
+  background:linear-gradient(180deg,rgba(143,180,255,.16),rgba(126,224,195,.08));
+  border-color:rgba(143,180,255,.25);
+}
+.hero{
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--line);
+  border-radius:28px;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.025)),
+    linear-gradient(135deg,#111624,#151b2a);
+  box-shadow:var(--shadow);
+  padding:28px 24px 24px;
+}
+.hero:before{
+  content:"";
+  position:absolute;
+  inset:auto -60px -100px auto;
+  width:260px;
+  height:260px;
+  background:radial-gradient(circle,rgba(143,180,255,.16),transparent 65%);
+  pointer-events:none;
+}
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:18px;
+}
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+}
+.name{
+  margin:0;
+  font-size:44px;
+  line-height:.96;
+  letter-spacing:-.04em;
+}
+.role{
+  margin:10px 0 0;
+  font-size:15px;
+  color:var(--mut);
+  line-height:1.5;
+  max-width:760px;
+}
+.pills{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:14px;
+}
+.pill{
+  font-size:12px;
+  color:#e3ebff;
+  padding:7px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.04);
+}
+.stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+@media (max-width:520px){
+  .stats{grid-template-columns:1fr}
+}
+.stat{
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:rgba(255,255,255,.03);
+  padding:14px;
+}
+.stat .k{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  color:#90a1c8;
+}
+.stat .v{
+  margin-top:6px;
+  font-size:15px;
+  line-height:1.35;
+  font-weight:650;
+}
+.stack{
+  margin-top:16px;
+  display:grid;
+  gap:14px;
+}
+.card{
+  border:1px solid var(--line);
+  border-radius:24px;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.022)),
+    linear-gradient(180deg,#111624,#141a29);
+  box-shadow:var(--shadow);
+}
+.card-inner{padding:20px 20px 18px}
+.section-head{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:12px;
+}
+.section-head h2{
+  margin:0;
+  font-size:12px;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:#9caed6;
+  white-space:nowrap;
+}
+.rule{
+  height:1px;
+  flex:1;
+  background:linear-gradient(90deg,rgba(255,255,255,.14),transparent);
+}
+.summary{
+  font-size:14.5px;
+  line-height:1.7;
+  color:#edf2ff;
+}
+.grid{
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:14px;
+}
+@media (max-width:900px){
+  .grid{grid-template-columns:1fr}
+}
+.exp-list{
+  display:grid;
+  gap:12px;
+}
+.job{
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:rgba(255,255,255,.03);
+  padding:16px;
+}
+.job-head{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:12px;
+  align-items:start;
+}
+@media (max-width:680px){
+  .job-head{grid-template-columns:1fr}
+}
+.job h3{
+  margin:0;
+  font-size:16px;
+  line-height:1.25;
+  letter-spacing:-.02em;
+}
+.job .org{
+  color:var(--mut);
+  font-size:13px;
+  margin-top:4px;
+}
+.job .date{
+  text-align:right;
+  color:#b1bddd;
+  font-family:var(--mono);
+  font-size:12px;
+}
+@media (max-width:680px){
+  .job .date{text-align:left}
+}
+.job ul{
+  margin:10px 0 0 17px;
+  padding:0;
+}
+.job li{
+  margin:6px 0;
+  color:#e9efff;
+  font-size:13.6px;
+  line-height:1.52;
+}
+.info-stack{
+  display:grid;
+  gap:12px;
+}
+.mini{
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:rgba(255,255,255,.03);
+  padding:16px;
+}
+.mini h3{
+  margin:0 0 10px;
+  font-size:12px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:#9fb0d6;
+}
+.chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+.chip{
+  padding:8px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.04);
+  font-size:12.5px;
+  color:#ebf1ff;
+}
+.lines{
+  display:grid;
+  gap:9px;
+}
+.line{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:flex-start;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:10px 12px;
+  background:rgba(255,255,255,.02);
+}
+.line .k{
+  color:#9eb0d5;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.13em;
+}
+.line .v{
+  color:#eef3ff;
+  font-size:13px;
+  text-align:right;
+  line-height:1.4;
+}
+.timeline{
+  display:grid;
+  gap:10px;
+}
+.tl{
+  display:grid;
+  grid-template-columns:110px 1fr;
+  gap:12px;
+  align-items:start;
+}
+.tl .when{
+  font-family:var(--mono);
+  font-size:11.5px;
+  color:#aebadd;
+  padding-top:2px;
+}
+.tl .what{
+  border-left:1px solid rgba(255,255,255,.10);
+  padding-left:12px;
+}
+.tl .what strong{
+  display:block;
+  font-size:13.5px;
+  margin-bottom:3px;
+}
+.tl .what span{
+  color:var(--mut);
+  font-size:13px;
+  line-height:1.45;
+}
+.stack-mode .stack-card{
+  transform:translateY(0);
+  opacity:1;
+}
+.stack-card{
+  transition:.25s ease;
+}
+.hide{
+  display:none!important;
+}
+.footer{
+  margin-top:14px;
+  text-align:center;
+  color:#94a6cf;
+  font-size:12px;
+}
+@media print{
+  body{background:#fff;color:#111}
+  .shell{max-width:none;padding:0}
+  .topbar{display:none}
+  .hero,.card,.job,.mini,.stat,.line{
+    box-shadow:none;
+    background:#fff;
+    color:#111;
+    border:1px solid #d9d9d9;
+  }
+  .role,.org,.summary,.job li,.line .v,.tl .what span,.footer,.brand p,.stat .k,.section-head h2,.line .k{color:#444}
+  .pill,.chip{
+    background:#fff;
+    color:#111;
+    border:1px solid #d9d9d9;
+  }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="topbar">
+    <div class="brand">
+      <h1>Resume</h1>
+      <p>Stacked single-page presentation</p>
+    </div>
+    <div class="controls">
+      <button class="btn active" data-view="ops">Operations / Finance</button>
+      <button class="btn" data-view="systems">Systems / Workflow</button>
+      <button class="btn" data-view="creative">Creative / Web</button>
+      <button class="btn" onclick="window.print()">Print</button>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <h1 class="name">Dylan Allen</h1>
+        <p class="role" id="heroRole">
+          Operations, finance, and systems professional supporting nonprofit infrastructure through process improvement, documentation controls, data governance, and practical workflow design.
+        </p>
+        <div class="pills" id="heroPills"></div>
+      </div>
+      <div class="stats">
+        <div class="stat">
+          <div class="k">Current role</div>
+          <div class="v">Data &amp; Finance Manager</div>
+        </div>
+        <div class="stat">
+          <div class="k">Focus</div>
+          <div class="v" id="heroFocus">Operational stability + internal systems</div>
+        </div>
+        <div class="stat">
+          <div class="k">Environment</div>
+          <div class="v">Nonprofit / multi-role / constraint-heavy</div>
+        </div>
+        <div class="stat">
+          <div class="k">Strength</div>
+          <div class="v" id="heroStrength">Turning messy work into repeatable systems</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="stack stack-mode">
+    <section class="card stack-card">
+      <div class="card-inner">
+        <div class="section-head"><h2>Summary</h2><div class="rule"></div></div>
+        <div class="summary" id="summaryText">
+          Blended operator with experience spanning finance-adjacent administration, CRM/data governance, web infrastructure, and workflow improvement. Best used where systems are messy, responsibilities overlap, and the organization needs someone who can both execute the work and improve the way the work gets done.
+        </div>
+      </div>
+    </section>
+
+    <section class="card stack-card">
+      <div class="card-inner">
+        <div class="section-head"><h2>Experience</h2><div class="rule"></div></div>
+        <div class="grid">
+          <div class="exp-list" id="expList"></div>
+          <div class="info-stack">
+            <div class="mini">
+              <h3>Core strengths</h3>
+              <div class="chips" id="strengthChips"></div>
+            </div>
+            <div class="mini">
+              <h3>Tools</h3>
+              <div class="chips" id="toolChips"></div>
+            </div>
+            <div class="mini">
+              <h3>Education</h3>
+              <div class="lines">
+                <div class="line">
+                  <div class="k">Degree</div>
+                  <div class="v">B.A. in Communications</div>
+                </div>
+                <div class="line">
+                  <div class="k">School</div>
+                  <div class="v">University of West Florida</div>
+                </div>
+              </div>
+            </div>
+            <div class="mini">
+              <h3>Contact</h3>
+              <div class="lines">
+                <div class="line"><div class="k">Location</div><div class="v">Hobe Sound, FL</div></div>
+                <div class="line"><div class="k">Email</div><div class="v">you@email.com</div></div>
+                <div class="line"><div class="k">Phone</div><div class="v">(xxx) xxx-xxxx</div></div>
+                <div class="line"><div class="k">LinkedIn</div><div class="v">linkedin.com/in/your-handle</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card stack-card">
+      <div class="card-inner">
+        <div class="section-head"><h2>Trajectory</h2><div class="rule"></div></div>
+        <div class="timeline" id="timeline"></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="footer">Built as a separate resume page intended to sit alongside a broader portfolio index.</div>
+</div>
+
+<script>
+const views = {
+  ops: {
+    heroRole: "Operations, finance, and systems professional supporting nonprofit infrastructure through process improvement, documentation controls, data governance, and practical workflow design.",
+    heroFocus: "Operational stability + internal systems",
+    heroStrength: "Turning messy work into repeatable systems",
+    pills: ["Operations","Finance Support","CRM / Data","Process Improvement","Nonprofit Infrastructure"],
+    summary: "Blended operator with experience spanning finance-adjacent administration, CRM/data governance, web infrastructure, and workflow improvement. Best used where systems are messy, responsibilities overlap, and the organization needs someone who can both execute the work and improve the way the work gets done.",
+    strengths: [
+      "Process improvement",
+      "Workflow standardization",
+      "Documentation controls",
+      "Cross-functional coordination",
+      "Operational problem-solving",
+      "Data accuracy"
+    ],
+    tools: [
+      "QuickBooks",
+      "Bill.com",
+      "Divvy",
+      "Excel",
+      "Blackbaud Altru",
+      "SharePoint",
+      "Power Apps",
+      "WordPress"
+    ],
+    jobs: [
+      {
+        title:"Data & Finance Manager",
+        org:"Lighthouse ArtCenter",
+        date:"Nov 2023 – Present",
+        bullets:[
+          "Support finance operations through invoices, deposits, transaction records, payroll documentation, and reporting support.",
+          "Absorbed finance responsibilities after staff turnover and helped stabilize documentation-heavy workflows.",
+          "Improved internal processes across class administration, reporting, and reimbursement support.",
+          "Maintain operational systems that increase consistency and reduce recurring administrative drag."
+        ]
+      },
+      {
+        title:"Marketing Officer & CRM Administrator",
+        org:"Medigap Plans of America",
+        date:"Mar 2022 – Nov 2023",
+        bullets:[
+          "Managed CRM records, reporting quality, and communication workflows.",
+          "Improved data consistency and supported operational reliability in a high-volume environment.",
+          "Balanced marketing execution with structured process thinking."
+        ]
+      },
+      {
+        title:"Promotions Director",
+        org:"Hubbard Radio",
+        date:"Nov 2017 – Oct 2020",
+        bullets:[
+          "Coordinated promotions, digital campaigns, and internal execution across departments.",
+          "Worked inside deadline-driven operations with constant prioritization and logistics demands."
+        ]
+      }
+    ],
+    timeline: [
+      ["2017–2020","Built cross-functional execution skills in media promotions, campaign coordination, and deadline-driven operations."],
+      ["2021–Present","Expanded independent delivery through contract web/design work and direct client problem-solving."],
+      ["2022–2023","Deepened CRM and data administration capabilities while managing communication systems."],
+      ["2023–Present","Shifted into a blended operations/finance/systems role with growing responsibility and organizational dependence."]
+    ]
+  },
+  systems: {
+    heroRole: "Systems-minded builder focused on eliminating redundancy, structuring data, and creating lightweight tools that make recurring work faster, cleaner, and more reliable.",
+    heroFocus: "Workflow design + internal tooling",
+    heroStrength: "Bridging operations, data, and usable systems",
+    pills: ["Systems Thinking","Workflow Logic","Automation Mindset","Data Structure","Internal Tools"],
+    summary: "Built for environments where the existing process is too manual, fragmented, or brittle. Experience includes turning repetitive tasks into systems, standardizing inputs for cleaner outputs, and designing tools that non-technical users can actually work with.",
+    strengths: [
+      "Systems thinking",
+      "Workflow design",
+      "Structured data input",
+      "Usability under constraints",
+      "Internal app concepts",
+      "Efficiency-first mindset"
+    ],
+    tools: [
+      "Power Apps",
+      "SharePoint",
+      "HTML/CSS/JS",
+      "Excel",
+      "Structured templates",
+      "WordPress",
+      "Beaver Builder",
+      "ACF"
+    ],
+    jobs: [
+      {
+        title:"Data & Finance Manager / Operations & Systems",
+        org:"Lighthouse ArtCenter",
+        date:"Nov 2023 – Present",
+        bullets:[
+          "Built structured workflows for class submissions, reimbursement documentation, payroll calculations, and content reuse.",
+          "Reduced repetitive work by standardizing data flow and improving the way information moves between departments.",
+          "Created or designed systems that turned fragile manual tasks into repeatable processes.",
+          "Worked within constraint-heavy tools and still produced scalable internal improvements."
+        ]
+      },
+      {
+        title:"CRM Administrator",
+        org:"Medigap Plans of America",
+        date:"Mar 2022 – Nov 2023",
+        bullets:[
+          "Improved record quality and communication flow by making CRM processes more reliable and repeatable.",
+          "Supported operational efficiency through structured communication logic and data discipline."
+        ]
+      },
+      {
+        title:"Contract Designer & Web Developer",
+        org:"Self-Employed",
+        date:"Mar 2021 – Present",
+        bullets:[
+          "Built websites and repeatable front-end structures that made updates simpler for clients.",
+          "Translated vague business needs into usable deliverables without unnecessary complexity."
+        ]
+      }
+    ],
+    timeline: [
+      ["2021–Present","Developed a pattern of solving client and organizational problems through practical digital systems."],
+      ["2022–2023","Applied CRM discipline and workflow logic in a business setting with real communication volume."],
+      ["2023–Present","Expanded into internal systems work spanning operations, finance support, and reusable process infrastructure."]
+    ]
+  },
+  creative: {
+    heroRole: "Creative and web professional with a practical design sensibility, focused on clean communication, brand consistency, and usable front-end execution.",
+    heroFocus: "Communication clarity + web execution",
+    heroStrength: "Combining design thinking with real operational utility",
+    pills: ["Web Design","Digital Communication","Brand Systems","Front-End Execution","Content Structure"],
+    summary: "Creative work rooted in utility rather than decoration. Experience includes website maintenance, content presentation, digital campaign assets, and using design systems to support operational clarity and faster execution.",
+    strengths: [
+      "Web design",
+      "UI / content layout",
+      "Brand consistency",
+      "Template thinking",
+      "Digital campaign support",
+      "Clear communication"
+    ],
+    tools: [
+      "WordPress",
+      "HTML/CSS/JS",
+      "Adobe Creative Suite",
+      "Canva",
+      "Content grids",
+      "Template systems"
+    ],
+    jobs: [
+      {
+        title:"Data Administrator & Web Designer / Data & Finance Manager",
+        org:"Lighthouse ArtCenter",
+        date:"Nov 2023 – Present",
+        bullets:[
+          "Maintained and improved the website used for classes, exhibitions, and program communication.",
+          "Built cleaner front-end structures for catalogs, content reuse, and publish-ready outputs.",
+          "Used design thinking to improve the usability of internal and public-facing workflows."
+        ]
+      },
+      {
+        title:"Contract Designer & Web Developer",
+        org:"Self-Employed",
+        date:"Mar 2021 – Present",
+        bullets:[
+          "Designed and built websites focused on clarity, usability, and brand alignment.",
+          "Created digital materials and systems that made ongoing updates easier for clients."
+        ]
+      },
+      {
+        title:"Promotions Director",
+        org:"Hubbard Radio",
+        date:"Nov 2017 – Oct 2020",
+        bullets:[
+          "Produced digital campaigns, promotional materials, and branded content across platforms.",
+          "Worked at the intersection of design, marketing, and execution speed."
+        ]
+      }
+    ],
+    timeline: [
+      ["2017–2020","Built a creative foundation through marketing, promotions, and branded content production."],
+      ["2021–Present","Expanded into direct web design/development and client-facing digital work."],
+      ["2023–Present","Applied creative/web skills inside a nonprofit operational environment to support communication and publishing."]
+    ]
+  }
+};
+
+const els = {
+  heroRole: document.getElementById("heroRole"),
+  heroPills: document.getElementById("heroPills"),
+  heroFocus: document.getElementById("heroFocus"),
+  heroStrength: document.getElementById("heroStrength"),
+  summaryText: document.getElementById("summaryText"),
+  strengthChips: document.getElementById("strengthChips"),
+  toolChips: document.getElementById("toolChips"),
+  expList: document.getElementById("expList"),
+  timeline: document.getElementById("timeline"),
+  buttons: [...document.querySelectorAll("[data-view]")]
+};
+
+function render(viewKey){
+  const v = views[viewKey];
+  els.heroRole.textContent = v.heroRole;
+  els.heroFocus.textContent = v.heroFocus;
+  els.heroStrength.textContent = v.heroStrength;
+  els.heroPills.innerHTML = v.pills.map(x=>`<span class="pill">${x}</span>`).join("");
+  els.summaryText.textContent = v.summary;
+  els.strengthChips.innerHTML = v.strengths.map(x=>`<span class="chip">${x}</span>`).join("");
+  els.toolChips.innerHTML = v.tools.map(x=>`<span class="chip">${x}</span>`).join("");
+  els.expList.innerHTML = v.jobs.map(j=>`
+    <article class="job">
+      <div class="job-head">
+        <div>
+          <h3>${j.title}</h3>
+          <div class="org">${j.org}</div>
+        </div>
+        <div class="date">${j.date}</div>
+      </div>
+      <ul>${j.bullets.map(b=>`<li>${b}</li>`).join("")}</ul>
+    </article>
+  `).join("");
+  els.timeline.innerHTML = v.timeline.map(t=>`
+    <div class="tl">
+      <div class="when">${t[0]}</div>
+      <div class="what"><strong>${t[1].split(" ").slice(0,4).join(" ")}</strong><span>${t[1]}</span></div>
+    </div>
+  `).join("");
+  els.buttons.forEach(b=>b.classList.toggle("active",b.dataset.view===viewKey));
+}
+
+els.buttons.forEach(btn=>{
+  btn.addEventListener("click",()=>render(btn.dataset.view));
+});
+
+render("ops");
+</script>
+</body>
+</html>
